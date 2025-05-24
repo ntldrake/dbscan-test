@@ -41,19 +41,34 @@ uv sync
 
 ## Configuration
 
-Edit `main.py` and update the following variables in the `main()` function:
-
-```python
-DROPBOX_TOKEN = "YOUR_DROPBOX_ACCESS_TOKEN"  # Your Dropbox API token
-DROPBOX_FOLDER = "/Photos"  # Path to your photos folder
-EPS = 0.6  # DBSCAN distance threshold (lower = tighter clusters)
-MIN_SAMPLES = 2  # Minimum faces needed to form a cluster
+1. Create a `.env` file by copying the example:
+```bash
+cp .env.example .env
 ```
 
-### Parameter Tuning
+2. Edit the `.env` file with your configuration:
 
-- **EPS**: Controls how similar faces must be to cluster together (0.3-0.8 typical)
-- **MIN_SAMPLES**: Minimum number of similar faces to form a group
+```env
+# Dropbox API Configuration
+DROPBOX_TOKEN=your_dropbox_access_token_here
+
+# Dropbox folder path to scan for photos
+DROPBOX_FOLDER=/Photos
+
+# DBSCAN Parameters
+# Distance threshold for clustering (0.0 to 1.0, lower = more similar faces required)
+EPS=0.6
+
+# Minimum number of faces to form a cluster
+MIN_SAMPLES=2
+```
+
+### Configuration Options
+
+- **DROPBOX_TOKEN**: Your Dropbox API access token (required)
+- **DROPBOX_FOLDER**: Path to your photos folder in Dropbox (default: `/Photos`)
+- **EPS**: Controls how similar faces must be to cluster together (0.3-0.8 typical, default: 0.6)
+- **MIN_SAMPLES**: Minimum number of similar faces to form a group (default: 2)
 
 ## Usage
 

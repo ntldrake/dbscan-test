@@ -10,6 +10,8 @@ import io
 from collections import defaultdict
 import json
 import time
+import os
+from dotenv import load_dotenv
 
 class FacialRecognitionDBSCANWithMetadata:
     def __init__(self, dropbox_token):
@@ -423,13 +425,21 @@ class FacialRecognitionDBSCANWithMetadata:
 
 
 def main():
-    # Configuration
-    DROPBOX_TOKEN = "YOUR_DROPBOX_ACCESS_TOKEN"  # Replace with your token
-    DROPBOX_FOLDER = "/Photos"  # Replace with your folder path
+    # Load environment variables
+    load_dotenv()
     
-    # DBSCAN parameters
-    EPS = 0.6  # Distance threshold (adjust based on your needs)
-    MIN_SAMPLES = 2  # Minimum faces needed to form a cluster
+    # Configuration from environment variables
+    DROPBOX_TOKEN = os.getenv("DROPBOX_TOKEN")
+    if not DROPBOX_TOKEN:
+        print("Error: DROPBOX_TOKEN not found in environment variables.")
+        print("Please create a .env file based on .env.example and add your Dropbox access token.")
+        return
+    
+    DROPBOX_FOLDER = os.getenv("DROPBOX_FOLDER", "/Photos")
+    
+    # DBSCAN parameters with defaults
+    EPS = float(os.getenv("EPS", "0.6"))
+    MIN_SAMPLES = int(os.getenv("MIN_SAMPLES", "2"))
     
     # Initialize the facial recognition system
     fr_system = FacialRecognitionDBSCANWithMetadata(DROPBOX_TOKEN)
